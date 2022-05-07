@@ -1,8 +1,10 @@
+//company filter
 document.getElementById('filter_company').addEventListener('change', function () {
    let companyId = this.value || this.options[this.selectedIndex].value
     window.location.href = window.location.href.split('?')[0] + '?company_id=' + companyId;
 });
 
+//delete button
 document.querySelectorAll('.btn-delete').forEach((button) => {
     button.addEventListener('click', function (event) {
         event.preventDefault();
@@ -14,3 +16,28 @@ document.querySelectorAll('.btn-delete').forEach((button) => {
         }
     })
 });
+
+//clear button
+document.getElementById('btn-clear').addEventListener('click', () => {
+    let input = document.getElementById('search'),
+        select = document.getElementById('filter_company');
+
+    input.value = "";
+    select.selectedIndex = 0;
+
+    window.location.href = window.location.href.split('?')[0];
+});
+
+const toggleClearButton = () => {
+    let query = location.search,
+       pattern = /[?&]search=/,
+       button = document.getElementById('btn-clear');
+
+    if (pattern.test(query)) {
+        button.style.display = "block";
+    } else {
+        button.style.display = "none";
+    }
+}
+
+toggleClearButton();
