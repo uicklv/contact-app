@@ -24,3 +24,7 @@ Route::get('/contacts/{id}', [ContactController::class, 'show'])->name('contacts
 Route::put('/contacts/{id}', [ContactController::class, 'update'])->name('contacts.update');
 Route::get('/contacts/{id}/edit', [ContactController::class, 'edit'])->name('contacts.edit');
 Route::delete('/contacts/{id}', [ContactController::class, 'destroy'])->name('contacts.destroy');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
