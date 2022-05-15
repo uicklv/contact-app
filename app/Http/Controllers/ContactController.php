@@ -10,8 +10,11 @@ class ContactController extends Controller
 {
     public function index()
     {
-        $contacts = Contact::latestFirst()->paginate(10);
-        $companies = Company::orderBy('name')->pluck('name', 'id')->prepend('All Companies', '');
+
+        $user = auth()->user();
+
+        $contacts = $user->contacts()->latestFirst()->paginate(10);
+        $companies = $user->companies()->orderBy('name')->pluck('name', 'id')->prepend('All Companies', '');
 
         return view('contacts.index', compact('contacts', 'companies'));
     }
@@ -19,7 +22,7 @@ class ContactController extends Controller
     public function create()
     {
         $contact = new Contact();
-        $companies = Company::orderBy('name')->pluck('name', 'id')->prepend('All Companies', '');
+        $companies = auth()->user()->companies()->orderBy('name')->pluck('name', 'id')->prepend('All Companies', '');
 
         return view('contacts.create', compact('companies','contact'));
     }
@@ -34,7 +37,7 @@ class ContactController extends Controller
             'company_id' => 'required|exists:companies,id',
         ]);
 
-        Contact::create($request->all());
+        $request->user()->contacts()->create($request->all());
 
         return redirect()->route('contacts.index')->with('message', 'Contact has been added successfully');
     }
@@ -50,7 +53,7 @@ class ContactController extends Controller
     {
         $contact = Contact::findOrFail($id);
 
-        $companies = Company::orderBy('name')->pluck('name', 'id')->prepend('All Companies', '');
+        $companies = auth()->user()->companies()->orderBy('name')->pluck('name', 'id')->prepend('All Companies', '');
 
         return view('contacts.edit', compact('companies', 'contact'));
     }

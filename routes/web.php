@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Settings\AccountController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\ContactController;
 /*
@@ -30,3 +31,4 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Auth::routes(['verify' => true]);
 
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/settings/account', [AccountController::class, 'index']);
