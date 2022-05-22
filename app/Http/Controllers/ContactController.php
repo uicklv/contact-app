@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ContactRequest;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use \App\Models\Contact;
@@ -10,11 +11,8 @@ class ContactController extends Controller
 {
     public function index()
     {
-
-        $user = auth()->user();
-
-        $contacts = $user->contacts()->latestFirst()->paginate(10);
-        $companies = $user->companies()->orderBy('name')->pluck('name', 'id')->prepend('All Companies', '');
+        $contacts = auth()->user()->contacts()->latestFirst()->paginate(10);
+        $companies = Company::userCompanies();
 
         return view('contacts.index', compact('contacts', 'companies'));
     }
@@ -22,21 +20,13 @@ class ContactController extends Controller
     public function create()
     {
         $contact = new Contact();
-        $companies = auth()->user()->companies()->orderBy('name')->pluck('name', 'id')->prepend('All Companies', '');
+        $companies = Company::userCompanies();
 
         return view('contacts.create', compact('companies','contact'));
     }
 
-    public function store(Request $request)
+    public function store(ContactRequest $request)
     {
-        $request->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'email' => 'required|email',
-            'address' => 'required',
-            'company_id' => 'required|exists:companies,id',
-        ]);
-
         $request->user()->contacts()->create($request->all());
 
         return redirect()->route('contacts.index')->with('message', 'Contact has been added successfully');
@@ -49,21 +39,12 @@ class ContactController extends Controller
 
     public function edit(Contact $contact)
     {
-        $companies = auth()->user()->companies()->orderBy('name')->pluck('name', 'id')->prepend('All Companies', '');
-
+        $companies = Company::userCompanies();
         return view('contacts.edit', compact('companies', 'contact'));
     }
 
-    public function update(Contact $contact, Request $request)
+    public function update(Contact $contact, ContactRequest $request)
     {
-        $request->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'email' => 'required|email',
-            'address' => 'required',
-            'company_id' => 'required|exists:companies,id',
-        ]);
-
         $contact->update($request->all());
 
         return redirect()->route('contacts.index')->with('message', 'Contact has been updated successfully');
