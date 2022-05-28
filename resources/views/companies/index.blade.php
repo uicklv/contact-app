@@ -40,7 +40,7 @@
                                             <td>{{ $company->name }}</td>
                                             <td>{{ $company->address }}</td>
                                             <td>{{ $company->email }}</td>
-                                            <td>{{ $company->contacts->count() }}</td>
+                                            <td>{{ $company->contacts_count }}</td>
                                             <td width="150">
                                                 <a href="{{ route('companies.show', $company->id) }}" class="btn btn-sm btn-circle btn-outline-info" title="Show"><i class="fa fa-eye"></i></a>
                                                 <a href="{{ route('companies.edit', $company->id) }}" class="btn btn-sm btn-circle btn-outline-secondary" title="Edit"><i class="fa fa-edit"></i></a>

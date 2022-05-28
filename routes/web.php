@@ -22,7 +22,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth', 'verified'])->group(function () {
 //    Route::get('/contacts', [ContactController::class, 'index'])->name('contacts.index');
 //    Route::post('/contacts', [ContactController::class, 'store'])->name('contacts.store');
 //    Route::get('/contacts/create', [ContactController::class, 'create'])->name('contacts.create');
@@ -30,7 +29,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 //    Route::put('/contacts/{contact}', [ContactController::class, 'update'])->name('contacts.update');
 //    Route::get('/contacts/{contact}/edit', [ContactController::class, 'edit'])->name('contacts.edit');
 //    Route::delete('/contacts/{contact}', [ContactController::class, 'destroy'])->name('contacts.destroy');
-});
 Route::resources([
     '/contacts' => ContactController::class,
     '/companies' => CompanyController::class,

@@ -9,9 +9,14 @@ use \App\Models\Contact;
 
 class ContactController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', 'verified']);
+    }
+
     public function index()
     {
-        $contacts = auth()->user()->contacts()->latestFirst()->paginate(10);
+        $contacts = auth()->user()->contacts()->with('company')->latestFirst()->paginate(10);
         $companies = Company::userCompanies();
 
         return view('contacts.index', compact('contacts', 'companies'));
@@ -40,6 +45,7 @@ class ContactController extends Controller
     public function edit(Contact $contact)
     {
         $companies = Company::userCompanies();
+
         return view('contacts.edit', compact('companies', 'contact'));
     }
 
