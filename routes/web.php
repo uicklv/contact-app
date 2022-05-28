@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\Settings\AccountController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\ContactController;
 /*
@@ -15,6 +16,8 @@ use \App\Http\Controllers\ContactController;
 |
 */
 
+Auth::routes(['verify' => true]);
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -27,13 +30,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 //    Route::put('/contacts/{contact}', [ContactController::class, 'update'])->name('contacts.update');
 //    Route::get('/contacts/{contact}/edit', [ContactController::class, 'edit'])->name('contacts.edit');
 //    Route::delete('/contacts/{contact}', [ContactController::class, 'destroy'])->name('contacts.destroy');
-    Route::resources([
-        '/contacts' => ContactController::class,
-        '/companies' => CompanyController::class,
-    ]);
 });
-
-Auth::routes(['verify' => true]);
+Route::resources([
+    '/contacts' => ContactController::class,
+    '/companies' => CompanyController::class,
+]);
 
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/settings/account', [AccountController::class, 'index']);
