@@ -16,9 +16,9 @@
                             Settings
                         </div>
                         <div class="list-group list-group-flush">
-                            <a href="#" class="list-group-item list-group-item-action active"><span>Profile</span></a>
-                            <a href="#" class="list-group-item list-group-item-action"><span>Account</span></a>
-                            <a href="#" class="list-group-item list-group-item-action"><span>Import & Export</span></a>
+                            <a href="" class="list-group-item list-group-item-action active"><span>Profile</span></a>
+{{--                            <a href="#" class="list-group-item list-group-item-action"><span>Account</span></a>--}}
+{{--                            <a href="#" class="list-group-item list-group-item-action"><span>Import & Export</span></a>--}}
                         </div>
                     </div>
                 </div><!-- /.col-md-3 -->

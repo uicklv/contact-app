@@ -16,7 +16,7 @@ class Company extends Model
 
     public function contacts()
     {
-        return $this->hasMany(Contact::class);
+        return $this->hasMany(Contact::class)->withoutGlobalScope(SearchScope::class);
     }
 
     public static function boot()
@@ -33,6 +33,6 @@ class Company extends Model
 
     public static function userCompanies()
     {
-        return self::where('user_id', auth()->id())->orderBy('name')->pluck('name', 'id')->prepend('All Companies', '');
+        return self::withoutGlobalScopes()->where('user_id', auth()->id())->orderBy('name')->pluck('name', 'id')->prepend('All Companies', '');
     }
 }
